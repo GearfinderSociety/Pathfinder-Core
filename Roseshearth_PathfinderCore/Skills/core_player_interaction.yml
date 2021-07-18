@@ -1,0 +1,23 @@
+ROSESHEARTH_CORE_PLAYER_CANCEL:
+  TriggerConditions:
+  - entitytype{type=PLAYER} true
+  Skills:
+  - cancelevent
+  - skill{s=ROSESHEARTH_CORE_PLAYER_CANCEL_MESSAGE} @Trigger
+
+ROSESHEARTH_CORE_OWNER_CANCEL:
+  TriggerConditions:
+  - owner true
+  Skills:
+  - cancelevent
+  - skill{s=ROSESHEARTH_CORE_OWNER_CANCEL_MESSAGE} @Trigger
+
+ROSESHEARTH_CORE_PLAYER_CANCEL_MESSAGE:
+  Cooldown: 3
+  Skills:
+  - message{msg="&8[&6&lPATHFINDER&8] &l» &7Players cannot enter manual combat."}
+
+ROSESHEARTH_CORE_OWNER_CANCEL_MESSAGE:
+  Cooldown:
+  Skills:
+  - message{msg="&8[&6&lPATHFINDER&8] &l» &7You cannot attack your own follower."}

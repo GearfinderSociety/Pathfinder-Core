@@ -1,0 +1,32 @@
+PATHFINDERS_WAND_TOOL_SELECT:
+  Id: STICK
+  Display: '&6&lWand &8| &6&lSelect'
+  Skills:
+  - skill{s=ROSESHEARTH_UNIT_SELECTION_FUNCTION} @Trigger ~onInteract
+
+PATHFINDERS_WAND_TOOL_MOVEMENT:
+  Id: STICK
+  Display: '&6&lWand &8| &6&lMovement'
+  Skills:
+  - skill{s=ROSESHEARTH_UNIT_MOVEMENT_FUNCTION} ~onUse
+  - skill{s=ROSESHEARTH_UNIT_FOLLOW_FUNCTION} @Trigger ~onInteract
+
+PATHFINDERS_WAND_TOOL_THROW:
+  Id: STICK
+  Display: '&6&lWand &8| &6&lThrow Grab'
+  Skills:
+  - skill{s=ROSESHEARTH_FUNCTION_GRAB_MOUNT_SIGNAL} @EIR{r=3;limit=1;sort=NEAREST} ~onUse
+  - skill{s=ROSESHEARTH_FUNCTION_GRAB_EJECT_SIGNAL} @Passenger ~onSwing
+  - skill{s=ROSESHEARTH_FUNCTION_GRAB_RECALL_SIGNAL} @Trigger ~onInteract
+
+PATHFINDERS_WAND_TOOL_REMOVE:
+  Id: STICK
+  Display: '&6&lWand &8| &6&lRemove'
+  Skills:
+  - skill{s=ROSESHEARTH_UNIT_REMOVE_FUNCTION} @Trigger ~onInteract
+
+PATHFINDERS_WAND_TOOL_COMBAT:
+  Id: STICK
+  Display: '&6&lWand &8| &6&lCombat'
+  Skills:
+  - skill{s=ROSESHEARTH_UNIT_COMBAT_GEN_FUNCTION} ~onUse

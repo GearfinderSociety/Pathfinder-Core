@@ -1,0 +1,28 @@
+#-----------------------------------------------------------------------#
+
+ROSESHEARTH_PAWN_TEXTURE_MACHINE_1:
+  Skills:
+  - delay 2
+  - disguise{disguise=ZOMBIE setDynamicName setPitchLocked setInvisible setBaby setYModifier 1.25 setHelmet PISTON} @Self
+
+ROSESHEARTH_PAWN_TEXTURE_STORAGE_1:
+  Skills:
+  - delay 2
+  - disguise{disguise=ZOMBIE setDynamicName setPitchLocked setInvisible setBaby setYModifier 1.25 setHelmet CHEST} @Self
+
+ROSESHEARTH_PAWN_TEXTURE_FURNACE_1:
+  Skills:
+  - delay 2
+  - disguise{disguise=ZOMBIE setDynamicName setPitchLocked setInvisible setBaby setYModifier 1.25 setHelmet FURNACE} @Self
+
+#-----------------------------------------------------------------------#
+
+ROSESHEARTH_PAWN_TEXTURE_COMMON_1:
+  Skills:
+  - delay 2
+  - disguise{disguise=ZOMBIE setDynamicName setPitchLocked setInvisible setBaby setYModifier 1.25 setHelmet RED_WOOL} @Self
+
+ROSESHEARTH_PAWN_TEXTURE_COMMON_2:
+  Skills:
+  - delay 2
+  - disguise{disguise=ZOMBIE setDynamicName setPitchLocked setInvisible setBaby setYModifier 1.25 setHelmet GREEN_WOOL} @Self

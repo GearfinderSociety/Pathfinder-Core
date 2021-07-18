@@ -1,0 +1,6 @@
+SYSTEM_MOB_GRAB_HANDLER:
+  Type: ARMOR_STAND
+  Options.Invincible: true
+  Options.Invisible: true
+  Skills:
+  - skill{s=ROSESHEARTH_FUNCTION_GRAB_ENTITY} @Trigger ~onSpawn

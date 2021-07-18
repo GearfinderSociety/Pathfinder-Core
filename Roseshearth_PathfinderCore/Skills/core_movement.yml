@@ -1,0 +1,61 @@
+#--------------------------------------------------------------------------------------------------#
+
+ROSESHEARTH_UNIT_MOVEMENT_FUNCTION:
+  Condition:
+  - crouching false
+  Skills:
+  - signal{s=roses_unit_movement} @EIR{r=30}
+
+ROSESHEARTH_UNIT_MOVEMENT_ACTION:
+  TriggerConditions:
+  - owner true
+  Conditions:
+  - variableisset target.roseshearth_selection true
+  - variableisset target.roseshearth_unit_follow true
+  - variableEquals{var=target.roseshearth_unit_follow;value="true"} false
+  Skills:
+  - teleport @Owner
+
+#--------------------------------------------------------------------------------------------------#
+
+ROSESHEARTH_UNIT_FOLLOW_FUNCTION:
+  Cooldown: 5
+  Conditions:
+  - crouching true
+  Skills:  
+  - signal{s=roses_unit_follow}
+
+ROSESHEARTH_UNIT_FOLLOW_FUNCTION_REDIRECT:
+  TriggerConditions: 
+  - owner true
+  Skills:
+  - signal{s=roses_unit_follow_red} @Parent
+
+ROSESHEARTH_UNIT_FOLLOW_INITVAR:
+  Conditions:
+  - variableisset target.roseshearth_unit_follow false
+  Skills:
+  - setvariable{var=caster.roseshearth_unit_follow;type=STRING;value="false"} @Self
+
+ROSESHEARTH_UNIT_FOLLOW_TOGGLE_TRUE:
+  Conditions:
+  - variableisset target.roseshearth_selection true
+  - variableisset target.roseshearth_unit_follow true
+  - variableEquals{var=target.roseshearth_unit_follow;value="true"} castinstead ROSESHEARTH_UNIT_FOLLOW_TOGGLE_DENY
+  Skills:
+  - setvariable{var=caster.roseshearth_unit_follow;type=STRING;value="true"} @Self
+  #- message{msg="DEBUG! Now following you."} @Owner 
+
+ROSESHEARTH_UNIT_FOLLOW_TOGGLE_DENY:
+  Skills:
+  - setvariable{var=caster.roseshearth_unit_follow;type=STRING;value="false"} @Self
+  #- message{msg="DEBUG! No longer following you."} @Owner
+
+ROSESHEARTH_UNIT_FOLLOW_PASSIVE:
+  Conditions:
+  - variableisset target.roseshearth_unit_follow true
+  - variableEquals{var=target.roseshearth_unit_follow;value="true"} true
+  Skills:
+  - teleport @Owner
+
+#--------------------------------------------------------------------------------------------------#

@@ -1,0 +1,5 @@
+REALMMAKER_WAND_FOLK_GUARD:
+  Id: STICK
+  Display: '&6&lFolk Guard - Wand'
+  Skills:
+  - skill{s=EREMES_HERO_PAWN_SUMMON} @Self ~onUse

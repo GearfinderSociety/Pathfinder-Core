@@ -1,0 +1,23 @@
+#------------------------------------------------------------------------------------------------------------------------#
+
+CAPTAIN_LOGIC_SETUP_UNIT:
+  TargetConditions:
+  - owner true
+  Skills:
+  - setvariable{var=caster.roseshearth_unit_hero_level;type=INTEGER;value="%mmocore_profession_unit-hero-captain%"}
+  - setvariable{var=caster.roseshearth_unit_hero_class;type=STRING;value="Captain"}
+  - setname{name="&7&l« &c&l&n<caster.var.roseshearth_owner_name>&7&l »\n&8<&lb>&f&lClass<&co> &c&l<caster.var.roseshearth_unit_hero_subclass> &7&l| &c&l<caster.var.roseshearth_unit_hero_level>&8<&rb>\n&7&l« <caster.name> &7&l| &f&l<caster.hp>&7&l<&fs>&c&l<caster.mhp> &c<&heart> &7&l»"} @Self
+
+GUARD_LOGIC_SETUP_PAWN:
+  Skills:
+  - delay 10
+  - setname{name="&6&l&n<caster.var.roseshearth_owner_name>&7&l | &8<&lb> &7&l&nGuard Pawn&8 <&rb>"} @Self
+  - skill{s=ROSESHEARTH_PAWN_TEXTURE_MACHINE_1} @Self
+
+GUARD_LOGIC_SETUP_UNIT:
+  Skills:
+  - delay 10
+  - setname{name="&6&l&n<caster.var.roseshearth_owner_name>&7&l | &8<&lb> &7&l&nGuard Eremes&8 <&rb>"} @Self
+  - disguise{d=PILLAGER setDynamicName setEnraged} @Self
+
+#------------------------------------------------------------------------------------------------------------------------#

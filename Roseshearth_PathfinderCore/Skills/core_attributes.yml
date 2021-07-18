@@ -1,0 +1,21 @@
+ROSESHEARTH_LOAD_ATTRIBUTES:
+  TargetConditions:
+  - owner true
+  Skills:
+  - setvariable{var=caster.roseshearth_unit_attr_vitality;type=INTEGER;value="%mmocore_attribute_vitality%"}
+  - setvariable{var=caster.roseshearth_unit_attr_strength;type=INTEGER;value="%mmocore_attribute_strength%"}
+  - setvariable{var=caster.roseshearth_unit_attr_dexterity;type=INTEGER;value="%mmocore_attribute_dexterity%"}
+  - setvariable{var=caster.roseshearth_unit_attr_intelligence;type=INTEGER;value="%mmocore_attribute_intelligence%"}
+
+ROSESHEARTH_LOAD_PLAYERDATA:
+  TargetConditions:
+  - owner true
+  Skills:
+  - setvariable{var=caster.roseshearth_player_renown;type=INTEGER;value="%mmocore_profession_roseshearth-player-renown%"}
+  - setvariable{var=caster.roseshearth_player_village;type=INTEGER;value="%mmocore_profession_roseshearth-player-village%"}
+
+ROSESHEARTH_LOAD_HEALTH:
+  Conditions:
+  - variableisset target.roseshearth_unit_health false
+  Skills: 
+  - setvariable{var=caster.roseshearth_unit_health;type=INTEGER;value="<caster.mhp>"}

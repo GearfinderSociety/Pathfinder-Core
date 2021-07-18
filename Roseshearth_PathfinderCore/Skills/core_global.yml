@@ -1,0 +1,209 @@
+#-------------------------------------------------------------------------------------------#
+#                                                                                           #
+#                                                                                           #
+#                                                                                           #
+#-------------------------------------------------------------------------------------------#
+
+# BASE OWNERSHIP AND PARENT CHECK SECTION!
+#
+# This section allows you to handle the ownership
+# of your units and make them check if they have
+# a valid owner/parent. Also allows you to remove
+# them if they don't have a valid owner/parent.
+
+ROSESHEARTH_CORE_SETOWNER:
+  Conditions:
+  - variableisset caster.roseshearth_owner_name false
+  - variableisset caster.roseshearth_owner_uuid false
+  Skills:
+  - setowner 
+  - delay 10
+  - setvariable{var=caster.roseshearth_owner_name;type=STRING;value="<target.name>"} @Owner
+  - setvariable{var=caster.roseshearth_owner_uuid;type=STRING;value="<target.uuid>"} @Owner
+  - delay 2
+  - message{msg="&9DEBUG | &fOWNER NAME - &6<caster.var.roseshearth_owner_name>"} @Owner
+  - message{msg="&9DEBUG | &fOWNER UUID - &6<caster.var.roseshearth_owner_uuid>"} @Owner
+
+ROSESHEARTH_CORE_OFFOWNER:
+  Conditions:
+  - ownerisonline false
+  Skills:
+  - remove @Self
+  - remove @Children
+
+ROSESHEARTH_CORE_NOPARENT:
+  Conditions:
+  - hasparent false
+  Skills:
+  - remove @Self
+
+ROSESHEARTH_CORE_NOMASTER:
+  Skills:
+  - skill:ROSESHEARTH_CORE_OFFOWNER
+  - skill:ROSESHEARTH_CORE_NOPARENT
+
+ROSESHEARTH_CORE_FAROWNER:
+  TargetConditions:
+  - owner true
+  - distance{d=>30} true
+  Skills:
+  - teleport
+
+# Fancy skill to unstuck, currently not much used
+# by me, but may come in handy to other people.
+ROSESHEARTH_CORE_UNSTUCK:
+  Skills:
+  - lunge{velocity=0.01;velocityY=0} @Self
+
+#-------------------------------------------------------------------------------------------#
+#                                                                                           #
+#                                                                                           #
+#                                                                                           #
+#-------------------------------------------------------------------------------------------#
+
+# Civs based structure units. Checks for blocks they are stanting on.
+# Useful? Sort of, if you own Civs Premium you can make mob controllers
+# for your structures and remove them when the structure colapses. 
+
+ROSESHEARTH_STRUCTURE_BLOCKCHECK_1:
+  TargetConditions:
+  - inblock{b=CHEST,TRAPPED_CHEST,ENDER_CHEST} false
+  Skills:
+  - remove @Self
+
+ROSESHEARTH_STRUCTURE_BLOCKCHECK_2:
+  TargetConditions:
+  - onblock{m=BARREL,PISTON,CRAFTING_TABLE,SMITHING_TABLE} false
+  Skills:
+  - remove @Self
+
+#-------------------------------------------------------------------------------------------#
+#                                                                                           #
+#                                                                                           #
+#                                                                                           #
+#-------------------------------------------------------------------------------------------#
+
+# Pet mechanics (based on Main Ownership mechanics)
+# Allows you to manipulate the behaviour of your
+# pets.
+
+ROSESHEARTH_PETS_SETOWNER:
+  Skills:
+  - skill{s=ROSESHEARTH_CORE_SETOWNER} @Trigger
+  - delay 10
+  - runaigoalselector{goal=clear} @Self
+  - runaigoalselector{goal=gotoowner} @Self
+  - runaigoalselector{goal=float} @Self
+
+ROSESHEARTH_PETS_SETACTION_TRUE:
+  TriggerConditions:
+  - owner true
+  Skills:
+  - runaigoalselector{goal=clear} @Self
+  - runaigoalselector{goal=meleeattack} @Self 
+  - runaigoalselector{goal=gotoowner} @Self
+  - runaigoalselector{goal=float} @Self
+
+ROSESHEARTH_PETS_SETACTION_DENY:
+  TriggerConditions:
+  - owner true
+  Skills:
+  - runaigoalselector{goal=clear} @Self
+  - runaigoalselector{goal=gotoowner} @Self
+  - runaigoalselector{goal=float} @Self
+
+#-------------------------------------------------------------------------------------------#
+#                                                                                           #
+#                                                                                           #
+#                                                                                           #
+#-------------------------------------------------------------------------------------------#
+
+# Function to call for both mark & unmark actions.
+# These skills lets you select which units will
+# receive orders from your wands.
+ROSESHEARTH_UNIT_SELECTION_FUNCTION:
+  Skills:
+  - skill{s=ROSESHEARTH_UNIT_SELECTION_MECH_MARK} 
+  - skill{s=ROSESHEARTH_UNIT_SELECTION_MECH_UNMK}
+
+# Mark Signal - Sends a signal to mark the target.
+ROSESHEARTH_UNIT_SELECTION_MECH_MARK:
+  Conditions:
+  - crouching false
+  TargetConditions:
+  - variableisset target.roseshearth_selection false
+  Skills:
+  - signal{s=roses_unit_selection_mark}
+  
+# Unmark Signal - Sends a signal to unmark the target.
+ROSESHEARTH_UNIT_SELECTION_MECH_UNMK:
+  Conditions:
+  - crouching true
+  TargetConditions:
+  - variableisset target.roseshearth_selection true
+  - variableEquals{var=target.roseshearth_selection;value="selected"} true
+  Skills:
+  - signal{s=roses_unit_selection_unmk}
+
+# Mark mechanic, triggered by 'roses_unit_selection_mark'.
+# Marks the unit/mob/pet to receive orders from wands.
+ROSESHEARTH_UNIT_SELECTION_MARK:
+  TriggerConditions:
+  - owner true
+  Skills:
+  # --- Sets the selection variable on the entire mob tree.
+  - setvariable{var=target.roseshearth_selection;type=STRING;value="selected"} @Self
+  - setvariable{var=target.roseshearth_selection;type=STRING;value="selected"} @Parent
+  - setvariable{var=target.roseshearth_selection;type=STRING;value="selected"} @Children
+  - setvariable{var=target.roseshearth_selection;type=STRING;value="selected"} @Siblings
+  # --- Glow Potion, so you know whats selected.
+  - potion{type=GLOWING;duration=2147483647;hasParticles=false;force=true} @Self
+  - potion{type=GLOWING;duration=2147483647;hasParticles=false;force=true} @Parent
+  - potion{type=GLOWING;duration=2147483647;hasParticles=false;force=true} @Children
+  - potion{type=GLOWING;duration=2147483647;hasParticles=false;force=true} @Siblings
+  # --- DEBUG:
+  - message{msg="&9DEBUG | &6Unit Marked."} @Owner
+
+# Unmark mechanic, triggered by 'roses_unit_selection_unmk'.
+# Unmarks the unit/mob/pet to stop receiving orders from wands.
+ROSESHEARTH_UNIT_SELECTION_UNMK:
+  TriggerConditions:
+  - owner true
+  Skills:
+  # --- Unsets the selection variable. 
+  - variableUnset{var=target.roseshearth_selection} @Self
+  - variableUnset{var=target.roseshearth_selection} @Parent
+  - variableUnset{var=target.roseshearth_selection} @Children
+  - variableUnset{var=target.roseshearth_selection} @Siblings
+  # --- Glow Potion, forces the remove of the glow effect.
+  - potion{type=GLOWING;duration=1;hasParticles=false;force=true} @Self
+  - potion{type=GLOWING;duration=1;hasParticles=false;force=true} @Parent
+  - potion{type=GLOWING;duration=1;hasParticles=false;force=true} @Children
+  - potion{type=GLOWING;duration=1;hasParticles=false;force=true} @Siblings
+  # --- DEBUG:
+  - message{msg="&9DEBUG | &6Unit Unmarked."} @Owner
+
+#-------------------------------------------------------------------------------------------#
+#                                                                                           #
+#                                                                                           #
+#                                                                                           #
+#-------------------------------------------------------------------------------------------#
+
+ROSESHEARTH_CUBE_FACTION:
+  TargetConditions:
+  - owner true
+  Conditions:
+  - variableisset caster.roseshearth_faction false
+  Skills:
+  # Change %lands_land_name% to any player faction/guild/town plugin. If you give this
+  # skill to a mob and it has an owner, it will get the faction based on its owner.
+  - setvariable{var=caster.roseshearth_faction;type=STRING;value="%lands_land_name%"}
+  - delay 10
+  - message{msg="<caster.var.roseshearth_faction> FACTION SET!"}
+  - SetFaction{faction="<caster.var.roseshearth_faction>"} @Self
+
+#-------------------------------------------------------------------------------------------#
+#                                                                                           #
+#                                                                                           #
+#                                                                                           #
+#-------------------------------------------------------------------------------------------#

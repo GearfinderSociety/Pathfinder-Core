@@ -1,0 +1,18 @@
+EREMES_HERO_PAWN_SUMMON:
+  Cooldown: 5
+  Conditions:
+  - variableisset target.roseshearth_unit_hero false
+  Skills:
+  - setvariable{var=caster.roseshearth_unit_hero;type=STRING;value="gear_hero"} @Self
+  - summon{type=REALMMAKER_HERO_PAWN_EREMES} @Self
+  - message{msg="&6Summoned Eremes, the Guard."} @Self
+
+EREMES_HERO_UNIT_SUMMON:
+  TargetConditions:
+  - owner true
+  Skills:
+  - summon{type=REALMMAKER_HERO_UNIT_EREMES} @Owner
+
+EREMES_HERO_UNIT_CLASS:
+  Skills:
+  - setvariable{var=caster.roseshearth_unit_hero_subclass;type=STRING;value="Guard"} @Self

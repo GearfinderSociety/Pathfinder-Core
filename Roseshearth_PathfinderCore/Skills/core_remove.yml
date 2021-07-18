@@ -1,0 +1,108 @@
+ROSESHEARTH_UNIT_REMOVE_FUNCTION:
+  Conditions:
+  - crouching true
+  Skills:
+  - signal{s=roses_unit_remove} 
+
+ROSESHEARTH_UNIT_REMOVE_HERO_CMD:
+  TriggerConditions:
+  - owner true
+  - crouching true
+  - variableisset target.roseshearth_unit_hero true
+  Conditions:
+  - variableisset target.roseshearth_selection true
+  - variableEquals{var=target.roseshearth_selection;value="selected"} true
+  Skills:
+  - message{msg="&9DEBUG | &6Hero Unit Removed."} @Owner
+  - variableUnset{var=target.roseshearth_unit_hero} @Owner
+  - remove @Children
+  - remove @Siblings
+  - remove @Parent
+  - remove @Self
+
+ROSESHEARTH_PAWN_REMOVE_HERO_NOC: # NOC STANDS FOR NO CHILDREN
+  TargetConditions:
+  - owner true
+  - variableisset target.roseshearth_unit_hero true
+  Conditions:
+  - children{a=0} true
+  Skills:
+  - message{msg="&9DEBUG | &6Hero Pawn Removed."} @Owner
+  - variableUnset{var=target.roseshearth_unit_hero} @Owner
+  - remove @Self
+
+#----------------------------------------------------------------------------------------------------------#
+
+ROSESHEARTH_UNIT_REMOVE_ARMY_1_CMD:
+  TriggerConditions:
+  - owner true
+  - crouching true
+  - variableisset target.roseshearth_unit_army_1 true
+  Conditions:
+  - variableisset target.roseshearth_selection true
+  - variableEquals{var=target.roseshearth_selection;value="selected"} true
+  Skills:
+  - message{msg="&9DEBUG | &6Army Unit Removed."} @Owner
+  - variableUnset{var=target.roseshearth_unit_army_1} @Owner
+  - remove @Children
+  - remove @Siblings
+  - remove @Parent
+  - remove @Self
+
+ROSESHEARTH_PAWN_REMOVE_ARMY_1_NOC: # NOC STANDS FOR NO CHILDREN
+  TargetConditions:
+  - owner true
+  - variableisset target.roseshearth_unit_army_1 true
+  Conditions:
+  - children{a=0} true
+  Skills:
+  - message{msg="&9DEBUG | &6Army Pawn Removed."} @Owner
+  - variableUnset{var=target.roseshearth_unit_army_1} @Owner
+  - remove @Self
+
+#----------------------------------------------------------------------------------------------------------#
+
+ROSESHEARTH_UNIT_REMOVE_STRUC_CMD:
+  TriggerConditions:
+  - owner true
+  - crouching true
+  - variableisset target.roseshearth_unit_struc true
+  Conditions:
+  - variableisset target.roseshearth_selection true
+  - variableEquals{var=target.roseshearth_selection;value="selected"} true
+  Skills:
+  - message{msg="&9DEBUG | &6Structure Unit Removed."} @Owner
+  - variableUnset{var=target.roseshearth_unit_struc} @Owner
+  - remove @Children
+  - remove @Siblings
+  - remove @Parent
+  - remove @Self
+
+ROSESHEARTH_PAWN_REMOVE_STRUC_NOC: # NOC STANDS FOR NO CHILDREN
+  TargetConditions:
+  - owner true
+  - variableisset target.roseshearth_unit_struc true
+  Conditions:
+  - children{a=0} true
+  Skills:
+  - message{msg="&9DEBUG | &6Structure Pawn Removed."} @Owner
+  - variableUnset{var=target.roseshearth_unit_struc} @Owner
+  - remove @Self
+
+#----------------------------------------------------------------------------------------------------------#
+
+ROSESHEARTH_UNIT_REMOVE_MINION_CMD:
+  TriggerConditions:
+  - owner true
+  - crouching true
+  - variableisset target.roseshearth_unit_minion true
+  Conditions:
+  - variableisset target.roseshearth_selection true
+  - variableEquals{var=target.roseshearth_selection;value="selected"} true
+  Skills:
+  - message{msg="&9DEBUG | &6Minion Unit Removed."} @Owner
+  - variableUnset{var=target.roseshearth_unit_minion} @Owner
+  - remove @Children
+  - remove @Siblings
+  - remove @Parent
+  - remove @Self

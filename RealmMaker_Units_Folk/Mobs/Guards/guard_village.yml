@@ -1,0 +1,83 @@
+REALMMAKER_HERO_PAWN_EREMES:
+  Type: ARMOR_STAND
+  Display: '&d&lGuard Eremes'
+  Faction: ROSES_HERO
+  Options:
+    Collidable: false
+    AlwaysShowName: true
+    Invincible: true
+    Invisible: false
+  Skills:
+#-----------------------------------------------------------------------#
+# Owner Interaction:
+  - skill{s=ROSESHEARTH_CORE_SETOWNER} @Trigger ~onSpawn
+#  - skill{s=ROSESHEARTH_CORE_FAROWNER} @Owner ~onTimer:100
+#-----------------------------------------------------------------------#
+# Basic Setup:
+#
+#  - 
+#  - skill{s=ROSESHEARTH_CUBE_FACTION} @Owner ~onSpawn 
+#
+  - skill{s=GUARD_LOGIC_SETUP_PAWN} @Self ~onSpawn
+  - skill{s=EREMES_HERO_UNIT_SUMMON} @Owner ~onSpawn
+#-----------------------------------------------------------------------#
+# General Commands:
+  - skill{s=ROSESHEARTH_UNIT_MOVEMENT_ACTION} @Owner ~onSignal:roses_unit_movement
+  - skill{s=ROSESHEARTH_UNIT_FOLLOW_INITVAR} @Self ~onSpawn
+  - skill{s=ROSESHEARTH_UNIT_FOLLOW_PASSIVE} @Self ~onTimer:40
+  - skill{s=ROSESHEARTH_UNIT_FOLLOW_TOGGLE_TRUE} @Self ~onSignal:roses_unit_follow_red
+  - skill{s=ROSESHEARTH_PAWN_REMOVE_HERO_NOC} @Owner ~onTimer:100
+#-----------------------------------------------------------------------#
+
+REALMMAKER_HERO_UNIT_EREMES:
+  Type: PILLAGER
+  Display: '&d&lGuard Eremes'
+  Health: 185
+  Damage: 10
+  Faction: ROSES_HERO
+  Options:
+    PreventSunburn: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    Silent: true
+    MovementSpeed: 0.32
+  Equipment:
+  - IRON_SWORD HAND
+  - IRON_AXE OFFHAND
+  Skills:
+#-----------------------------------------------------------------------#
+# Owner Interaction:
+  - skill{s=ROSESHEARTH_CORE_SETOWNER} @NearestPlayer{r=2} ~onSpawn
+  - skill{s=ROSESHEARTH_CORE_NOMASTER} @Self ~onTimer:120
+#  - skill{s=ROSESHEARTH_CORE_FAROWNER} @Owner ~onTimer:100
+  - skill{s=ROSESHEARTH_CORE_OWNER_CANCEL;sync=true} ~onDamaged
+#-----------------------------------------------------------------------#
+# Unit Selection:
+  - skill{s=ROSESHEARTH_UNIT_SELECTION_MARK} @Self ~onSignal:roses_unit_selection_mark
+  - skill{s=ROSESHEARTH_UNIT_SELECTION_UNMK} @Self ~onSignal:roses_unit_selection_unmk
+#-----------------------------------------------------------------------#
+# Basic Setup:
+  - skill{s=GUARD_LOGIC_SETUP_UNIT} @Self ~onSpawn
+  - skill{s=EREMES_HERO_UNIT_CLASS} @Self ~onSpawn
+#-----------------------------------------------------------------------#
+# Class Logic:
+# - THIS IS A DEMO OF UNITS, IT DOES NOT INCLUDE ADVANCED FUNCTIONS SUCH
+# AS CLASS LGOIC. INTERESTED ON THIS? CONTACT ME 'Rumi Ex Machina#3819'
+#-----------------------------------------------------------------------#
+# General Commands:
+  - skill{s=ROSESHEARTH_UNIT_FOLLOW_FUNCTION_REDIRECT} @Parent ~onSignal:roses_unit_follow
+  - skill{s=ROSESHEARTH_UNIT_REMOVE_HERO_CMD} @Owner ~onSignal:roses_unit_remove
+#-----------------------------------------------------------------------#
+# Combat Commands:
+# - THIS IS A DEMO OF UNITS, IT DOES NOT INCLUDE ADVANCED FUNCTIONS SUCH
+# AS COMBAT ORDERS. INTERESTED ON THIS? CONTACT ME 'Rumi Ex Machina#3819'
+#-----------------------------------------------------------------------#
+  AIGoalSelectors:
+  - 0 clear
+  - 1 meleeattack
+  - 2 gotoparent
+  - 3 float
+  AITargetSelectors:
+  - 0 clear
+  - 1 attacker
+  - 2 OtherFactionMonsters

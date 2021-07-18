@@ -1,0 +1,122 @@
+#--------------------------------------------------------------------------------------#
+
+ROSESHEARTH_FUNCTION_GRAB_MOUNT_SIGNAL:
+  Cooldown: 5
+  Conditions:
+  - hasPassenger false
+  - crouching false
+  Skills:
+  - signal{s=path_grab_mount}
+  - message{msg="PAWN RIDING TRUE"} @Self
+
+ROSESHEARTH_FUNCTION_GRAB_MOUNT_ACTION:
+  TriggerConditions:
+  - owner true
+  Conditions:
+  - mounted false
+  - variableisset target.roseshearth_selection true
+  Skills:
+  - mounttarget @Trigger
+  - message{msg="PAWN RIDING TRUE YOU"} @Trigger
+
+#--------------------------------------------------------------------------------------#
+
+ROSESHEARTH_FUNCTION_GRAB_EJECT_SIGNAL:
+  Cooldown: 5
+  Conditions:
+  - hasPassenger true
+  - crouching false
+  Skills:
+  - message{msg="PAWN RIDING FALSE"} @Self
+  - skill{s=ROSESHEARTH_FUNCTION_GRAB_EJECT_PROJECTILE} @TargetLocation
+
+ROSESHEARTH_FUNCTION_GRAB_EJECT_ACTION:
+  TriggerConditions:
+  - owner true
+  Conditions:
+  - mounted true
+  - variableisset target.roseshearth_selection true
+  Skills:
+  - dismount @Self
+  - delay 10
+  - setvariable{var=caster.path_grab_pawn_x;type=STRING;value="<target.var.path_grab_lock_x>"} @Owner
+  - setvariable{var=caster.path_grab_pawn_y;type=STRING;value="<target.var.path_grab_lock_y>"} @Owner
+  - setvariable{var=caster.path_grab_pawn_z;type=STRING;value="<target.var.path_grab_lock_z>"} @Owner
+  - teleport @Location{c=<caster.var.path_grab_pawn_x>,<caster.var.path_grab_pawn_y>,<caster.var.path_grab_pawn_z>,0,0}
+  - message{msg="PAWN RIDING TRUE YOU"} @Trigger
+  - delay 10
+  - variableUnset{var=caster.path_grab_pawn_x} @Self
+  - variableUnset{var=caster.path_grab_pawn_y} @Self
+  - variableUnset{var=caster.path_grab_pawn_z} @Self
+ROSESHEARTH_FUNCTION_GRAB_EJECT_APPLY:
+  Conditions:
+  - variableisset target.path_grab_lock_x true
+  - variableisset target.path_grab_lock_y true
+  - variableisset target.path_grab_lock_z true
+  Skills:
+  - message{msg="LOCK COORD - <caster.var.path_grab_lock_x> <caster.var.path_grab_lock_y> <caster.var.path_grab_lock_z>"} @Self
+  - signal{s=path_grab_eject} @Passenger
+  - delay 100
+  - variableUnset{var=caster.path_grab_lock_x} @Self
+  - variableUnset{var=caster.path_grab_lock_y} @Self
+  - variableUnset{var=caster.path_grab_lock_z} @Self
+
+ROSESHEARTH_FUNCTION_GRAB_ENTITY:
+  Skills:
+  - skill{s=ROSESHEARTH_CORE_SETOWNER} @Trigger
+  - delay 6
+  - setvariable{var=target.path_grab_lock_x;type=STRING;value="<caster.l.x>"} @Owner
+  - setvariable{var=target.path_grab_lock_y;type=STRING;value="<caster.l.y>"} @Owner
+  - setvariable{var=target.path_grab_lock_z;type=STRING;value="<caster.l.z>"} @Owner
+  - sudoskill{s=ROSESHEARTH_FUNCTION_GRAB_EJECT_APPLY;cat=true} @Owner
+  - delay 100
+  - remove @Self
+#--------------------------------------------------------------------------------------#
+
+ROSESHEARTH_FUNCTION_GRAB_EJECT_PROJECTILE:
+  Condition:
+  - crouching false
+  Skills:
+  - projectile{
+        bulletType=ITEM;
+        material=STONE;
+        onTick=ROSESHEARTH_FUNCTION_GRAB_TICKS;
+        onEnd=ROSESHEARTH_FUNCTION_GRAB_FINAL;
+        mr=35;v=15;i=1;hr=1;vr=1;
+        hp=false;hnp=false;sE=false
+        d=200;syo=1.2;g=0.4;tyo=4;sfo=1
+    }
+  - message{msg="PASS!"} @Self
+
+
+ROSESHEARTH_FUNCTION_GRAB_TICKS:
+  Skills:
+  - effect:particles{p=redstone;color=#A33131;amount=20;speed=0;hS=0}
+
+ROSESHEARTH_FUNCTION_GRAB_FINAL:
+  Skills:
+  - summon{type=SYSTEM_MOB_GRAB_HANDLER}
+
+#--------------------------------------------------------------------------------------#
+
+ROSESHEARTH_FUNCTION_GRAB_RECALL_SIGNAL:
+  Cooldown: 5
+  Conditions:
+  - hasPassenger false
+  - crouching true
+  Skills:
+  - signal{s=path_grab_recall} 
+  - message{msg="Recalling Pawn!"} @Self
+
+ROSESHEARTH_FUNCTION_GRAB_RECALL_ACTION:
+  TriggerConditions:
+  - owner true
+  Conditions:
+  - variableisset target.roseshearth_selection true
+  Skills:
+  - sudoskill{s=RECALL_TO_UNIT;cat=true} @Parent
+
+RECALL_TO_UNIT:
+  Skills:
+  - teleport @Owner
+#--------------------------------------------------------------------------------------#

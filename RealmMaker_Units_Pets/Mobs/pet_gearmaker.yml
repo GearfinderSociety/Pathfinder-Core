@@ -1,0 +1,23 @@
+REALMMAKER_UNIT_PET_GEARMAKER:
+  Type: ZOMBIE
+  Display: ''
+  Health: 1000
+  Damage: 0
+  Options:
+    ApplyInvisibility: true
+    Invincible: true
+    Interactable: false
+    MovementSpeed: 1
+    PreventOtherDrops: true
+    Silent: true
+  Disguise: ARMOR_STAND setYModifier -1.5
+  Equipment:
+  - REALMMAKER_HEAD_PET_GEARMAKER HEAD
+  Skills:
+  - skill:ROSESHEARTH_PETS_SETOWNER @Trigger ~onSpawn
+  - skill:ROSESHEARTH_CORE_OFFOWNER @Self ~onTimer:100
+  - skill:ROSESHEARTH_CORE_FAROWNER @Owner ~onTimer:100
+  - skill:ROSESHEARTH_UNIT_REMOVE_PET_CMD @Owner ~onSignal:roses_unit_pet_remove
+  - effect:particles{particle=smoke_large;amount=20;hS=0;vS=0} @Self ~onTimer:60
+  AIGoalSelectors:
+  - 0 clear

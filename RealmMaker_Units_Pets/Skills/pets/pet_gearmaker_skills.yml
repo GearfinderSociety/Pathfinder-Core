@@ -1,0 +1,7 @@
+REALMMAKER_UNIT_PET_GEARMAKER_SUMMON:
+  Conditions:
+  - variableisset target.roseshearth_unit_pet false
+  Skills:
+  - summon{type=REALMMAKER_UNIT_PET_GEARMAKER} @Self
+  - setvariable{var=caster.roseshearth_unit_pet;type=STRING;value="yes"} @Self
+  #- message{msg="TEST PASS PET SPAWN"}

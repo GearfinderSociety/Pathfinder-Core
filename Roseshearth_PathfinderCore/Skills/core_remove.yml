@@ -106,3 +106,21 @@ ROSESHEARTH_UNIT_REMOVE_MINION_CMD:
   - remove @Siblings
   - remove @Parent
   - remove @Self
+
+#----------------------------------------------------------------------------------------------------------#
+
+ROSESHEARTH_UNIT_REMOVE_PET_FUNCTION:
+  Conditions:
+  - crouching true
+  Skills:
+  - signal{s=roses_unit_pet_remove} 
+
+ROSESHEARTH_UNIT_REMOVE_PET_CMD:
+  TargetConditions:
+  - owner true
+  - variableisset target.roseshearth_unit_pet true
+  Skills:
+  - variableUnset{var=target.roseshearth_unit_pet} @Owner
+  - remove @Self
+
+#----------------------------------------------------------------------------------------------------------#

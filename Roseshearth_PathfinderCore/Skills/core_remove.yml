@@ -116,7 +116,7 @@ ROSESHEARTH_UNIT_REMOVE_PET_FUNCTION:
   - signal{s=roses_unit_pet_remove} 
 
 ROSESHEARTH_UNIT_REMOVE_PET_CMD:
-  TargetConditions:
+  TriggerConditions:
   - owner true
   - variableisset target.roseshearth_unit_pet true
   Skills:

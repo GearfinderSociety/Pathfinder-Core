@@ -1,4 +1,5 @@
 # Pathfinder Core | A solution for your unit needs.
+# DEPRECATED
 
 Welcome:
 ---
